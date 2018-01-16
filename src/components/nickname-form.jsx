@@ -2,7 +2,7 @@ import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 
 export const NicknameForm = reduxForm({
-    form: 'nickname'
+    form: 'nicknameForm'
 })(({
     handleSubmit
 }) => (

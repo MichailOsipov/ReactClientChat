@@ -1,17 +1,17 @@
 import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 
-export const MessageForm = reduxForm({
-    form: 'messageForm'
+export const CreateRoomForm = reduxForm({
+    form: 'createRoomForm'
 })(({
     handleSubmit
 }) => (
     <form onSubmit={handleSubmit}>
         <Field
-            name="message"
+            name="roomName"
             component="input"
-            placeholder="Type message here"
+            placeholder="Type your room name here"
         />
-        <button type="submit">Отправить</button>
+        <button type="submit">Создать</button>
     </form>
 ));
