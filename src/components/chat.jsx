@@ -1,11 +1,13 @@
 import React from 'react';
 import io from 'socket.io-client';
 import {concat} from 'lodash';
-import {MessageForm} from './message-form';
+import {
+    ChatLayoutContainer,
+    ChatLayoutModule
+} from 'modules/chat-layout';
 import {NicknameForm} from './nickname-form';
-import {CreateRoomForm} from './create-room-form';
-import {MessagesList} from './messages-list';
-import {RoomsList} from './rooms-list';
+import {Rooms} from './rooms';
+import {Messages} from './messages';
 
 export class Chat extends React.Component {
     constructor(props) {
@@ -48,23 +50,36 @@ export class Chat extends React.Component {
 
     createRoom = ({roomName}) => {
         this.socket.emit('create room', {roomName});
+        this.setState({messages: []});
     }
 
     changeRoom = ({roomName}) => {
         this.socket.emit('change room', {roomName});
+        this.setState({messages: []});
     }
 
     render() {
         const {nickname, messages, roomScheme} = this.state;
         return (
-            <div>
-                <span>{`People know you as: ${nickname}`}</span>
-                <NicknameForm onSubmit={this.setNickname} />
-                <MessageForm onSubmit={this.sendMessage} />
-                <CreateRoomForm onSubmit={this.createRoom} />
-                <MessagesList nickname={nickname} messages={messages} />
-                <RoomsList roomScheme={roomScheme} onChangeRoom={this.changeRoom} />
-            </div>
+            <ChatLayoutContainer>
+                <ChatLayoutModule md={2}>
+                    <Rooms
+                        onCreateRoom={this.createRoom}
+                        onChangeRoom={this.changeRoom}
+                        roomScheme={roomScheme}
+                    />
+                </ChatLayoutModule>
+                <ChatLayoutModule md={3}>
+                    <Messages
+                        nickname={nickname}
+                        messages={messages}
+                        onSendMessage={this.sendMessage}
+                    />
+                </ChatLayoutModule>
+                <ChatLayoutModule md={2}>
+                    <NicknameForm nickname={nickname} onSubmit={this.setNickname} />
+                </ChatLayoutModule>
+            </ChatLayoutContainer>
         );
     }
 }

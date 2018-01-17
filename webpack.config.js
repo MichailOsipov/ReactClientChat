@@ -45,7 +45,7 @@ module.exports = {
 
             },
             {
-                test: /\.(csss|css)$/,
+                test: /\.(scss|css)$/,
                 use: [
                     {
                         loader: 'style-loader',
@@ -57,15 +57,13 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             modules: true,
-                            importLoaders: 1
+                            importLoaders: 1,
+                            localIdentName: '[local]-[hash:base64:3]'
                         }
                     },
                     'resolve-url-loader',
                     {
-                        loader: 'sass-loader',
-                        options: {
-                            outputStyle: 'expanded'
-                        }
+                        loader: 'sass-loader'
                     }
                 ]
             }

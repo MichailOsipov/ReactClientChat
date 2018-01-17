@@ -1,0 +1,21 @@
+.chat-layout-container {
+    display: flex;
+    justify-content: space-between;
+
+    &__module {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 2px dashed #abcafc;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 10px;
+        width: 1px;
+
+        @for $c from 1 through 10 {
+            &--md-#{$c} {
+                flex-grow: $c;
+            }
+        }
+    }
+}

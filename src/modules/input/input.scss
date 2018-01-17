@@ -1,0 +1,9 @@
+@import "~styles/constants";
+
+.input {
+    font-size: 26px;
+    height: $input-height;
+    border: none;
+    border-bottom: 2px solid;
+    border-color: #5796f2;
+}
