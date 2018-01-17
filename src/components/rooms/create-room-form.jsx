@@ -13,6 +13,5 @@ export const CreateRoomForm = reduxForm({
             component={InputField}
             placeholder="Type your new room name here"
         />
-        <button type="submit">Создать</button>
     </form>
 ));

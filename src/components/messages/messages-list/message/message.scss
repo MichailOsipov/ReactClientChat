@@ -1,9 +1,37 @@
 .message {
-    &--own {
-        background: #93d7ff;
+    display: flex;
+
+    &--next-different {
+        margin-bottom: 10px;
     }
 
-    &--not-own {
-        background: #e3ebf7;
+    &__author {
+        flex-grow: 1;
+        margin-right: 5px;
+        width: 1px;
+    }
+
+    &__text {
+        flex-grow: 4;
+        padding: 5px;
+        width: 1px;
+
+        &--own {
+            background: #b2e2ff;
+        }
+
+        &--not-own {
+            background: #e3ebf7;
+        }
+
+        &--next-different {
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        &--previous-different {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
     }
 }

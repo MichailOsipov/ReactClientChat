@@ -9,10 +9,12 @@ export const MessagesList = ({
 }) => (
     <div>
         {messages.length
-            ? map(messages, message => (
+            ? map(messages, (message, i) => (
                 <Message
                     key={JSON.stringify(message)}
                     nickname={nickname}
+                    nextDifferent={!isTheSameAuthor(message, messages[i + 1])}
+                    previousDifferent={!isTheSameAuthor(message, messages[i - 1])}
                     {...message}
                 />
             ))
@@ -28,3 +30,10 @@ MessagesList.propTypes = {
         text: PropTypes.string
     }))
 };
+
+function isTheSameAuthor(message1, message2) {
+    if (!message1 || !message2) {
+        return false;
+    }
+    return message1.author === message2.author;
+}

@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {change} from 'redux-form';
 import io from 'socket.io-client';
 import {concat} from 'lodash';
 import {
@@ -9,6 +11,9 @@ import {NicknameForm} from './nickname-form';
 import {Rooms} from './rooms';
 import {Messages} from './messages';
 
+@connect(null, {
+    setNewNickname: nickname => (dispatch) => { dispatch(change('nicknameForm', 'nickname', nickname)); }
+})
 export class Chat extends React.Component {
     constructor(props) {
         super(props);
@@ -19,6 +24,7 @@ export class Chat extends React.Component {
         this.socket.emit('ask a nickname', {});
         this.socket.on('set a nickname', ({nickname}) => {
             this.setState({nickname});
+            this.props.setNewNickname(nickname);
         });
         this.socket.on('set a room scheme', ({roomScheme}) => {
             this.setState({roomScheme});

@@ -11,8 +11,7 @@ export const MessageForm = reduxForm({
         <Field
             name="message"
             component={InputField}
-            placeholder="Type message here"
+            placeholder="Type a message here"
         />
-        <button type="submit">Отправить</button>
     </form>
 ));
