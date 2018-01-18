@@ -9,12 +9,17 @@
         flex-grow: 1;
         margin-right: 5px;
         width: 1px;
+        font-size: 18px;
+        font-family: Arial;
+        text-align: center;
     }
 
     &__text {
         flex-grow: 4;
         padding: 5px;
         width: 1px;
+        font-size: 18px;
+        font-family: Arial;
 
         &--own {
             background: #b2e2ff;

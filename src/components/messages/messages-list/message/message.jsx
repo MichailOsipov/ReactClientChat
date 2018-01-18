@@ -29,7 +29,9 @@ export const Message = block('message', generateDifferentModificator, {styles})(
 });
 
 const Author = Message.element('author')('div');
-const Text = Message.element('text', generateTextModificator)('div');
+const Text = Message.element('text', generateTextModificator)(({className, children}) => (
+    <div className={className}>{children}</div>
+));
 
 Message.propTypes = {
     nickname: PropTypes.string,

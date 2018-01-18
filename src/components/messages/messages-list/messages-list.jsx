@@ -1,27 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {block} from '@redneckz/react-bem-helper';
 import {map} from 'lodash';
+import {MiddleText} from 'modules/middle-text';
 import {Message} from './message';
+import styles from './messages-list.scss';
 
-export const MessagesList = ({
+export const MessagesList = block('messages-list', {styles})(({
+    className,
     nickname,
     messages
 }) => (
-    <div>
+    <div className={className}>
         {messages.length
             ? map(messages, (message, i) => (
                 <Message
-                    key={JSON.stringify(message)}
+                    key={JSON.stringify({...message, i})}
                     nickname={nickname}
                     nextDifferent={!isTheSameAuthor(message, messages[i + 1])}
                     previousDifferent={!isTheSameAuthor(message, messages[i - 1])}
                     {...message}
                 />
             ))
-            : 'No messages yet'
+            : <MiddleText>No messages yet</MiddleText>
         }
     </div>
-);
+));
 
 MessagesList.propTypes = {
     nickname: PropTypes.string,

@@ -1,6 +1,9 @@
 .chat-layout-container {
     display: flex;
     justify-content: space-between;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 5px;
 
     &__module {
         display: flex;
@@ -15,6 +18,12 @@
         @for $c from 1 through 10 {
             &--md-#{$c} {
                 flex-grow: $c;
+            }
+        }
+
+        @for $c from 1 through 10 {
+            &--height-#{$c} {
+                height: percentage($c / 10);
             }
         }
     }
