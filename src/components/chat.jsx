@@ -14,7 +14,7 @@ import {Messages} from './messages';
 
 @connect(null, {
     setNewNicknameInForm: nickname => (dispatch) => { dispatch(change('nicknameForm', 'nickname', nickname)); },
-    clearMessage: () => (dispatch) => { dispatch(reset('messageForm')); }
+    clearMessageInForm: () => (dispatch) => { dispatch(reset('messageForm')); }
 })
 export class Chat extends React.Component {
     static propTypes = {
