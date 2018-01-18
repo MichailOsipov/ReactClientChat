@@ -11,7 +11,8 @@ export const CreateRoomForm = reduxForm({
         <Field
             name="roomName"
             component={InputField}
-            placeholder="Type your new room name here"
+            placeholder="Type your new room name"
+            autoComplete="off"
         />
     </form>
 ));

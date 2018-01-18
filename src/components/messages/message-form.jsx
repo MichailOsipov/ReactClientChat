@@ -12,6 +12,7 @@ export const MessageForm = reduxForm({
             name="message"
             component={InputField}
             placeholder="Type a message here"
+            autoComplete="off"
         />
     </form>
 ));

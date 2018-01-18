@@ -7,22 +7,28 @@ import {RoomsList} from './rooms-list';
 export const Rooms = ({
     onCreateRoom,
     onChangeRoom,
-    roomScheme
+    roomScheme,
+    nickname
 }) => (
     <div>
         <MainTitle>Rooms:</MainTitle>
         <CreateRoomForm onSubmit={onCreateRoom} />
-        <RoomsList roomScheme={roomScheme} onChangeRoom={onChangeRoom} />
+        <RoomsList
+            roomScheme={roomScheme}
+            onChangeRoom={onChangeRoom}
+            nickname={nickname}
+        />
     </div>
 );
 
 Rooms.propTypes = {
     onCreateRoom: PropTypes.func,
     onChangeRoom: PropTypes.func,
-    roomScheme: PropTypes.arrayOf({
+    roomScheme: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string,
-        users: PropTypes.arrayOf({
+        users: PropTypes.arrayOf(PropTypes.shape({
             name: PropTypes.string
-        })
-    })
+        }))
+    })),
+    nickname: PropTypes.string
 };
