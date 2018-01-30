@@ -1,9 +1,10 @@
 import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {InputField} from 'modules/field/input-field';
+import {MESSAGE_FORM_NAME} from '../constants';
 
 export const MessageForm = reduxForm({
-    form: 'messageForm'
+    form: MESSAGE_FORM_NAME
 })(({
     handleSubmit
 }) => (
