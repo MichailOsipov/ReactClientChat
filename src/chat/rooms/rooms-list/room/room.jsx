@@ -5,30 +5,31 @@ import {map} from 'lodash';
 import {RoomTitle} from './room-title';
 import {RoomUser} from './room-user';
 import styles from './room.scss';
+import {UserPropType} from '../../../chat-prop-types';
 
 export const Room = block('room', {styles})(({
-    name,
-    users,
-    nickname,
+    roomId,
+    roomName,
+    userId,
+    usersInRoom,
     onChangeRoom
 }) => (
     <div>
-        <RoomTitle onChangeRoom={onChangeRoom} name={name} />
-        {map(users, user => (
+        <RoomTitle onChangeRoom={() => { onChangeRoom({roomId}); }} name={roomName} />
+        {map(usersInRoom, ({userId: currUserId, nickname}) => (
             <RoomUser
-                key={JSON.stringify(user)}
-                name={user.name}
-                highlight={nickname === user.name}
+                key={currUserId}
+                name={nickname}
+                highlight={currUserId === userId}
             />
         ))}
     </div>
 ));
 
 Room.propTypes = {
+    roomId: PropTypes.string,
     name: PropTypes.string,
-    users: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string
-    })),
+    users: PropTypes.arrayOf(UserPropType),
     onChangeRoom: PropTypes.func,
     nickname: PropTypes.string
 };

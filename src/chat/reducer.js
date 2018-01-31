@@ -1,13 +1,20 @@
 import {concat} from 'lodash';
-import {ADD_MESSAGE, CLEAR_MESSAGES, SET_ROOM_SCHEME} from './actions';
+import {SET_USER_ID, ADD_MESSAGE, CLEAR_MESSAGES, SET_ROOM_SCHEME} from './actions';
 
-export const chatReducer = (state = {messages: [], roomScheme: []}, action) => {
+export const chatReducer = (state = {userId: '', messages: [], roomScheme: {}}, action) => {
     switch (action.type) {
-        case ADD_MESSAGE: {
-            const {author, text} = action.payload;
+        case SET_USER_ID: {
+            const {userId} = action.payload;
             return {
                 ...state,
-                messages: concat(state.messages, {author, text})
+                userId
+            };
+        }
+        case ADD_MESSAGE: {
+            const {userId, text} = action.payload;
+            return {
+                ...state,
+                messages: concat(state.messages, {userId, text})
             };
         }
         case CLEAR_MESSAGES:

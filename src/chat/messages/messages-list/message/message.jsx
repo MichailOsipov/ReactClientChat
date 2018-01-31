@@ -6,19 +6,20 @@ import styles from './message.scss';
 
 export const Message = block('message', generateDifferentModificator, {styles})(({
     className,
-    nickname,
-    author,
+    userId,
+    authorId,
+    authorName,
     text,
     nextDifferent,
     previousDifferent
 }) => {
-    const realNickname = nickname === author ? 'You' : author;
+    const realNickname = userId === authorId ? 'You' : authorName;
     return (
         <div className={className}>
             <Author>{previousDifferent && `${realNickname}:`}</Author>
             <Text
-                nickname={nickname}
-                author={author}
+                userId={userId}
+                authorId={authorId}
                 nextDifferent={nextDifferent}
                 previousDifferent={previousDifferent}
             >
@@ -47,8 +48,8 @@ function generateTextModificator(props) {
     );
 }
 
-function generateMessageModificatior({nickname, author}) {
-    return nickname === author ? ['own'] : ['not-own'];
+function generateMessageModificatior({userId, authorId}) {
+    return userId === authorId ? ['own'] : ['not-own'];
 }
 
 function generateDifferentModificator({nextDifferent, previousDifferent}) {

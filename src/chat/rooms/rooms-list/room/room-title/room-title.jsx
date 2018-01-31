@@ -10,7 +10,7 @@ export const RoomTitle = block('room-title', {styles})(({
     name
 }) => (
     <div className={className}>
-        <JoinButton onClick={() => { onChangeRoom({roomName: name}); }}>Join</JoinButton>
+        <JoinButton onClick={onChangeRoom}>Join</JoinButton>
         <MiddleText>{name}</MiddleText>
     </div>
 ));

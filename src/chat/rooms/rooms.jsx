@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import {MainTitle} from 'modules/main-title';
 import {CreateRoomForm} from './create-room-form';
 import {RoomsList} from './rooms-list';
+import {UserPropType, RoomPropType} from '../chat-prop-types';
 
 export const Rooms = ({
     onCreateRoom,
     onChangeRoom,
     roomScheme,
-    nickname
+    userId
 }) => (
     <div>
         <MainTitle>Rooms:</MainTitle>
@@ -16,7 +17,7 @@ export const Rooms = ({
         <RoomsList
             roomScheme={roomScheme}
             onChangeRoom={onChangeRoom}
-            nickname={nickname}
+            userId={userId}
         />
     </div>
 );
@@ -24,11 +25,9 @@ export const Rooms = ({
 Rooms.propTypes = {
     onCreateRoom: PropTypes.func,
     onChangeRoom: PropTypes.func,
-    roomScheme: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-        users: PropTypes.arrayOf(PropTypes.shape({
-            name: PropTypes.string
-        }))
-    })),
-    nickname: PropTypes.string
+    roomScheme: PropTypes.shape({
+        users: PropTypes.arrayOf(UserPropType),
+        rooms: PropTypes.arrayOf(RoomPropType)
+    }),
+    userId: PropTypes.string
 };

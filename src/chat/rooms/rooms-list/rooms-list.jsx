@@ -1,35 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {block} from '@redneckz/react-bem-helper';
-import {map} from 'lodash';
+import {filter, map} from 'lodash';
 import {Room} from './room';
 import styles from './rooms-list.scss';
+import {UserPropType, RoomPropType} from '../../chat-prop-types';
 
 export const RoomsList = block('rooms-list', {styles})(({
     className,
     roomScheme,
     onChangeRoom,
-    nickname
-}) => (
-    <div className={className}>
-        {map(roomScheme, room => (
-            <Room
-                key={JSON.stringify(room)}
-                onChangeRoom={onChangeRoom}
-                nickname={nickname}
-                {...room}
-            />
-        ))}
-    </div>
-));
+    userId
+}) => {
+    const {rooms, users} = roomScheme;
+    return (
+        <div className={className}>
+            {map(rooms, ({roomId, roomName}) => (
+                <Room
+                    key={roomId}
+                    onChangeRoom={onChangeRoom}
+                    roomId={roomId}
+                    roomName={roomName}
+                    userId={userId}
+                    usersInRoom={filter(users, {roomId})}
+                />
+            ))}
+        </div>
+    );
+});
 
 RoomsList.propTypes = {
-    roomScheme: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-        users: PropTypes.arrayOf(PropTypes.shape({
-            name: PropTypes.string
-        }))
-    })),
+    roomScheme: PropTypes.shape({
+        users: PropTypes.arrayOf(UserPropType),
+        rooms: PropTypes.arrayOf(RoomPropType)
+    }),
     onChangeRoom: PropTypes.func,
     nickname: PropTypes.string
 };

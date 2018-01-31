@@ -7,19 +7,22 @@ import {NicknameForm} from './nickname-form';
 import {Rooms} from './rooms';
 import {Messages} from './messages';
 import {
+    setUserId,
     addMessage,
     clearMessages,
     setRoomScheme,
     setNicknameForm,
     clearMessageForm
 } from './actions';
-import {getNickname, getMessages, getRoomScheme} from './selectors';
+import {getUserId, getMessages, getRoomScheme} from './selectors';
+import {UserPropType, RoomPropType} from './chat-prop-types';
 
 @connect(state => ({
-    nickname: getNickname(state),
+    userId: getUserId(state),
     messages: getMessages(state),
     roomScheme: getRoomScheme(state)
 }), {
+    setUserId,
     addMessage,
     clearMessages,
     setRoomScheme,
@@ -28,19 +31,18 @@ import {getNickname, getMessages, getRoomScheme} from './selectors';
 })
 export class Chat extends React.Component {
     static propTypes = {
-        nickname: PropTypes.string,
+        userId: PropTypes.string,
         messages: PropTypes.arrayOf(PropTypes.shape({
-            author: PropTypes.string,
+            userId: PropTypes.string,
             text: PropTypes.string
         })),
-        roomScheme: PropTypes.arrayOf(PropTypes.shape({
-            name: PropTypes.string,
-            users: PropTypes.arrayOf(PropTypes.shape({
-                name: PropTypes.string
-            }))
-        })),
+        roomScheme: PropTypes.shape({
+            users: PropTypes.arrayOf(UserPropType),
+            rooms: PropTypes.arrayOf(RoomPropType)
+        }),
         setNicknameForm: PropTypes.func,
         clearMessageForm: PropTypes.func,
+        setUserId: PropTypes.func,
         addMessage: PropTypes.func,
         clearMessages: PropTypes.func,
         setRoomScheme: PropTypes.func
@@ -51,6 +53,8 @@ export class Chat extends React.Component {
         this.socket = io('localhost:8088');
         this.socket.on('connect', () => {
             this.socket.emit('ask a nickname', {});
+            this.socket.emit('ask a userId', {});
+            this.socket.on('set a userId', this.props.setUserId);
             this.socket.on('set a nickname', this.props.setNicknameForm);
             this.socket.on('set a room scheme', this.props.setRoomScheme);
             this.socket.on('broadcast message', this.props.addMessage);
@@ -71,13 +75,13 @@ export class Chat extends React.Component {
         this.props.clearMessages();
     }
 
-    changeRoom = ({roomName}) => {
-        this.socket.emit('change room', {roomName});
+    changeRoom = ({roomId}) => {
+        this.socket.emit('change room', {roomId});
         this.props.clearMessages();
     }
 
     render() {
-        const {nickname, messages, roomScheme} = this.props;
+        const {userId, messages, roomScheme} = this.props;
         return (
             <ChatLayoutContainer>
                 <ChatLayoutModule md={2} height={8}>
@@ -85,18 +89,19 @@ export class Chat extends React.Component {
                         onCreateRoom={this.createRoom}
                         onChangeRoom={this.changeRoom}
                         roomScheme={roomScheme}
-                        nickname={nickname}
+                        userId={userId}
                     />
                 </ChatLayoutModule>
                 <ChatLayoutModule md={3}>
                     <Messages
-                        nickname={nickname}
+                        userId={userId}
                         messages={messages}
+                        roomScheme={roomScheme}
                         onSendMessage={this.sendMessage}
                     />
                 </ChatLayoutModule>
                 <ChatLayoutModule md={2} height={1}>
-                    <NicknameForm nickname={nickname} onSubmit={this.setNickname} />
+                    <NicknameForm userId={userId} onSubmit={this.setNickname} />
                 </ChatLayoutModule>
             </ChatLayoutContainer>
         );
